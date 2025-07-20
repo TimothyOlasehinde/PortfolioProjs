@@ -1,14 +1,16 @@
 
 /*
-=================================================
+====================================================
 Creating The Tables for the Project
   - portfolioproj.CovidDeaths
   - portfolioproj.CovidVaccinations
-=================================================
+=====================================================
 This query creates the tables and their structures. 
 */
 
+-- ---------------------------------------------------
 -- Dropping & Creating portfolioproj.CovidDeaths Table 
+
 DROP TABLE IF EXISTS portfolioproj.CovidDeaths;
 CREATE TABLE portfolioproj.CovidDeaths( 
 	iso_code VARCHAR(50),
@@ -38,9 +40,11 @@ CREATE TABLE portfolioproj.CovidDeaths(
 	weekly_hosp_admissions DECIMAL,
 	weekly_hosp_admissions_per_million DECIMAL
 );
------------------------------------------------------
 
+
+-- -----------------------------------------------------
 -- Dropping & Creating portfolioproj.CovidVaccinations Table 
+
 DROP TABLE IF EXISTS portfolioproj.CovidVaccinations;
 CREATE TABLE portfolioproj.CovidVaccinations(
 	iso_code VARCHAR(50),
