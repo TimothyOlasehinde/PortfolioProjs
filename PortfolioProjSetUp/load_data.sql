@@ -9,7 +9,7 @@ This script loads both tables with the contents of the csv files.
 =============================================
 */
 
----------------------------------------------
+-- ---------------------------------------------
 -- Loading data into portfolioproj.CovidDeaths Table
 
 TRUNCATE TABLE portfolioproj.CovidDeaths;
@@ -19,7 +19,7 @@ ENCODING 'UTF8'
 DELIMITER ','
 CSV HEADER;
 
----------------------------------------------
+-- ---------------------------------------------
 -- Loading data into portfolioproj.CovidVaccinations Table 
 
 TRUNCATE TABLE portfolioproj.CovidVaccinations;
