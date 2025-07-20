@@ -4,9 +4,11 @@
 SELECT *
 FROM portfolioproj.coviddeaths
 WHERE continent IS NOT NULL
-
+	
+-- ---------------------------------------------------------------
 -- Looking at Total Cases vs Total Deaths 
 -- Shows likelyhood of dying from Covid from my country (Nigeria)
+	
 SELECT l
 	ocation, 
 	date, 
@@ -17,8 +19,10 @@ FROM portfolioproj.CovidDeaths
 WHERE LOCATION = 'Nigeria'
 ORDER BY 1, 2
 
+-- ---------------------------------------------------------------
 -- Looking at Total Cases vs Population
 -- Shows what percentage of population got Covid 
+	
 SELECT 
 	location, 
 	date, 
@@ -29,6 +33,7 @@ FROM portfolioproj.CovidDeaths
 -- WHERE LOCATION = 'Nigeria'
 ORDER BY 1, 2
 
+-- ---------------------------------------------------------------
 -- Looking at Countries with Highest Infection Rate compared to Population
 SELECT 
 	location, 
@@ -42,7 +47,8 @@ GROUP BY
 	population
 ORDER BY PercentagePopulationInfected DESC
 
---Showing the Countries with the Highest Death Count Per Population 
+-- ---------------------------------------------------------------
+-- Showing the Countries with the Highest Death Count Per Population 
 SELECT 
 	location, 
 	MAX(total_deaths)::INT TotalDeathCount
@@ -51,9 +57,13 @@ WHERE continent IS NOT NULL
 GROUP BY location
 ORDER BY TotalDeathCount DESC
 
+-- ---------------------------------------------------------------
 -- LETS BREAK THINGS DOWN BY CONTINENT
+-- ---------------------------------------------------------------
 
+-- ---------------------------------------------------------------
 -- Showing the Total Deaths by Continents 
+	
 SELECT 
 	location, 
 	MAX(total_deaths)::INT TotalDeathCount
@@ -62,9 +72,13 @@ WHERE continent IS NULL
 GROUP BY location
 ORDER BY TotalDeathCount DESC
 
+-- ---------------------------------------------------------------
 -- GLOBAL NUMBERS 
+-- ---------------------------------------------------------------
 
+-- ---------------------------------------------------------------
 -- Total Cases, Deaths and percentage per day
+	
 SELECT  
 	date,
 	SUM(new_cases) total_cases, 
@@ -75,7 +89,9 @@ WHERE continent IS NULL
 GROUP BY date
 ORDER BY 1,2
 
+-- ---------------------------------------------------------------
 -- Total Cases and Deaths as well as the Percentage of deaths to cases  
+	
 SELECT  
 	SUM(new_cases) total_cases, 
 	SUM(new_deaths::INT) total_deaths, 
@@ -84,7 +100,9 @@ FROM portfolioproj.CovidDeaths
 WHERE continent IS NULL
 ORDER BY 1,2
 
+-- ---------------------------------------------------------------
 --Joining all the cointent from both Tables (portfolioproj.CovidDeaths & portfolioproj.CovidVaccinations)
+	
 SELECT 
 	*
 FROM portfolioproj.CovidDeaths dea
@@ -92,6 +110,7 @@ JOIN portfolioproj.CovidVaccinations vac
 	ON dea.location = vac.location 
 	AND dea.date = vac.date
 
+-- ---------------------------------------------------------------
 -- Looking at Total Population vs Vaccinations
 
 SELECT 
@@ -108,6 +127,7 @@ JOIN portfolioproj.CovidVaccinations vac
 WHERE dea.continent IS NOT NULL
 ORDER BY 2, 3
 
+-- ---------------------------------------------------------------
 -- Using CTE to find the percentage of the Vaccinated Population vs the Total Population
 
 WITH PopovsVac AS (
@@ -134,7 +154,9 @@ SELECT
 FROM PopovsVac
 ORDER BY 2, 3
 
+-- ---------------------------------------------------------------
 -- Using Temporary Table to find the percentage of the Vaccinated Population vs the Total Population
+	
 DROP TABLE IF EXISTS PercentagePopulationVaccinated;
 CREATE TEMP TABLE PercentagePopulationVaccinated(
 continent VARCHAR(255),
@@ -157,12 +179,14 @@ JOIN portfolioproj.CovidVaccinations vac
 	ON dea.location = vac.location 
 	AND dea.date = vac.date
 WHERE dea.continent IS NOT NULL);
-
+-- Showing the Temp Table
 SELECT 
 	* 
-FROM PercentagePopulationVaccinated
+FROM PercentagePopulationVaccinated;
 
+-- ---------------------------------------------------------------
 -- Creating Views to store data for later visualization 
+	
 CREATE VIEW ViewPercentagePopulationVaccinated AS
 	SELECT 
 	dea.continent,
@@ -176,8 +200,8 @@ JOIN portfolioproj.CovidVaccinations vac
 	ON dea.location = vac.location 
 	AND dea.date = vac.date
 WHERE dea.continent IS NOT NULL;
-
+-- Displaying the View
 SELECT 
 	* 
-FROM ViewPercentagePopulationVaccinated
+FROM ViewPercentagePopulationVaccinated;
 
